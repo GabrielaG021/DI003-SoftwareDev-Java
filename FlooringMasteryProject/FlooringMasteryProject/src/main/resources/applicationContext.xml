@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+                http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Bean definitions go here -->
+
+    <bean id="userIO" class="com.gabrielag.flooringmastery1.ui.UserIOConsoleImpl"/>
+
+    <bean id="view" class="com.gabrielag.flooringmastery1.ui.FlooringMasteryView">
+        <constructor-arg ref="userIO"/>
+    </bean>
+
+    <bean id="ordersDao" class="com.gabrielag.flooringmastery1.dao.OrdersDaoFileImpl"/>
+    <bean id="productsDao" class="com.gabrielag.flooringmastery1.dao.ProductsDaoFileImpl"/>
+    <bean id="taxDao" class="com.gabrielag.flooringmastery1.dao.TaxDaoFileImpl"/>
+    <bean id="auditDao" class="com.gabrielag.flooringmastery1.dao.AuditDaoFileImpl"/>
+
+    <bean id="service" class="com.gabrielag.flooringmastery1.service.FlooringMasteryServiceLayerImpl">
+        <constructor-arg ref="ordersDao"/>
+        <constructor-arg ref="productsDao"/>
+        <constructor-arg ref="taxDao"/>
+        <constructor-arg ref="auditDao"/>
+    </bean>
+
+    <bean id="controller" class="com.gabrielag.flooringmastery1.controller.FlooringMasteryController">
+        <constructor-arg ref="service"/>
+        <constructor-arg ref="view"/>
+    </bean>
+</beans>
